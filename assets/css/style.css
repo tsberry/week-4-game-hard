@@ -1,0 +1,7 @@
+.charBox {
+    float: left;
+}
+
+#character-area {
+    clear: both;
+}
