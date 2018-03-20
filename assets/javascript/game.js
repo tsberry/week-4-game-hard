@@ -8,8 +8,11 @@ var characters = [obi, luke, sidious, maul];
 // Declare player character and enemy variables to be used later on
 var char;
 var enemy;
+var enemies = 3;
 // Declare a variable to track whether the characters are fighting (they are not at the beginning of the game)
 var fighting = false;
+// Declare a variable to track whether the player has lost
+var gameOver = false;
 
 function Character(name, hp, attack, counter, img, id) {
     // Each character has a name to display
@@ -30,15 +33,15 @@ function Character(name, hp, attack, counter, img, id) {
         var charBox = $("<div class=\"charBox\" id=\"" + this.charId + "\">");
         charBox.append("<div>" + this.charName + "</div>");
         charBox.append("<img style=\"height:100px; width:200px\" src=\"assets/images/" + this.image + "\">");
-        charBox.append("<div id=\"" + this.charId + "-health\">" + this.healthPoints + "</div");
+        charBox.append("<div id=\"" + this.charId + "-health\">" + this.healthPoints + "</div>");
         return charBox;
     };
 }
 
 // The selector function takes in an id from an html element and returns the character object associated with that id.
 function select(id) {
-    for(var i = 0; i < characters.length; i++) {
-        if(characters[i].charId === id) return characters[i];
+    for (var i = 0; i < characters.length; i++) {
+        if (characters[i].charId === id) return characters[i];
     }
 }
 
@@ -64,21 +67,31 @@ function fight() {
     $("#" + enemy.charId + "-health").text(enemy.healthPoints);
     // The player character's attack power is increased by the base attack value
     char.attackPower += char.baseAttack;
-    // If the enemy's health points are at or below zero
-    if (enemy.healthPoints <= 0) {
-        // End the fight
-        fighting = false;
-        // Remove the enemy character from the screen
-        $("#" + enemy.charId).remove();
-        // Display a message alerting enemy death
-        alert("ENEMY DEAD");
-    }
+
     // If the player's health points are at or below zero
     if (char.healthPoints <= 0) {
         //End the fight
         fighting = false;
+        gameOver = true;
         // Display a message alerting game over
         alert("GAME OVER");
+        $("#combat-text").html("<p>GAME OVER</p>");
+    }
+
+    // If the enemy's health points are at or below zero and the player is not dead
+    if (enemy.healthPoints <= 0 && !gameOver) {
+        // End the fight
+        fighting = false;
+        // Remove the enemy character from the screen
+        $("#" + enemy.charId).remove();
+        enemies--;
+        // Display a message alerting enemy death and text displaying this
+        alert(enemy.charName + " defeated.");
+        $("#combat-text").append("<p>" + enemy.charName + " defeated.</p>");
+
+        if(enemies === 0) {
+            $("#combat-text").html("<p>YOU WIN!</p>");
+        }
     }
 }
 
@@ -120,9 +133,9 @@ $("#enemy-area").on("click", ".charBox", function () {
 });
 
 // When the attack button is clicked
-$("#attack-button").on("click", function() {
+$("#attack-button").on("click", function () {
     // If the player is currently fighting
-    if(fighting) {
+    if (fighting) {
         // Call the fight function
         fight();
     }

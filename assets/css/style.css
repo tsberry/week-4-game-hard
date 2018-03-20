@@ -6,6 +6,7 @@
 body {
     background-image: url("../images/stars.png");
     background-repeat: no-repeat;
+    font-family: 'Orbitron', sans-serif;
 }
 
 header {
