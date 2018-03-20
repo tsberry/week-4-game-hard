@@ -1,10 +1,10 @@
 // Declare and initialize four characters
-var obi = new Character("Obi-wan Kenobi", 100, 6, 12, "obi.jpg", "obi");
-var luke = new Character("Luke Skywalker", 120, 5, 10, "luke.jpg", "luke");
-var sidious = new Character("Darth Sidious", 160, 3, 6, "sidious.jpg", "sidious");
-var maul = new Character("Darth Maul", 140, 4, 8, "maul.jpeg", "maul");
+var obi = new Character("Obi-wan Kenobi", 408, 24, 48, "obi.jpg", "obi");
+var luke = new Character("Luke Skywalker", 440, 20, 40, "luke.jpg", "luke");
+var maul = new Character("Darth Maul", 560, 15, 32, "maul.jpeg", "maul");
+var sidious = new Character("Darth Sidious", 666, 11, 24, "sidious.jpg", "sidious");
 // Add the characters to the characters array
-var characters = [obi, luke, sidious, maul];
+var characters = [obi, luke, maul, sidious];
 // Declare player character and enemy variables to be used later on
 var char;
 var enemy;
@@ -49,8 +49,8 @@ function select(id) {
 function start() {
     $("#start-area").append(obi.display());
     $("#start-area").append(luke.display());
-    $("#start-area").append(sidious.display());
     $("#start-area").append(maul.display());
+    $("#start-area").append(sidious.display());
 }
 
 // The fight function is called whenever the attack button is clicked (provided there is a character in the defender area). It removes health from the characters appropriately and increases the player's attack power. It also displays text to the screen showing the result of combat and updates the HP displays.
